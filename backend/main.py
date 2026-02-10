@@ -12,6 +12,7 @@ from gemini_webapi.constants import Model
 import re
 from typing import Any
 import uuid
+import base64
 from fastapi.staticfiles import StaticFiles
 
 
@@ -24,7 +25,7 @@ async def gemini_connection(app: FastAPI):
     global client
     print("Connecting to Gemini...")
     client = GeminiClient()
-    await client.init(timeout=30, auto_close=False, auto_refresh=True)
+    await client.init(timeout=60, auto_close=False, auto_refresh=True)
     try:
         yield
     finally:
@@ -127,7 +128,7 @@ Return ONLY valid JSON:
     try:
         response = await asyncio.wait_for(
             client.generate_content(prompt, model=Model.G_2_5_FLASH),
-            timeout=120
+            timeout=300
         )
         raw_text = response.text or ""
     except Exception as e:
@@ -156,7 +157,7 @@ Return ONLY valid JSON:
         try:
             image_response = await asyncio.wait_for(
                 client.generate_content(qa["image_prompt"], model=Model.G_2_5_FLASH),
-                timeout=120
+                timeout=300
             )
         except Exception as e:
             traceback.print_exc()
@@ -174,7 +175,7 @@ Return ONLY valid JSON:
                 try:
                     await asyncio.wait_for(
                         img.save(path=str(IMAGE_DIR), filename=filename, verbose=True),
-                        timeout=60
+                        timeout=300
                     )
 
                     forwarded_host = request.headers.get("x-forwarded-host")
@@ -201,3 +202,83 @@ Return ONLY valid JSON:
             "images": image_paths
         }
     )
+    
+@app.post("/api/generate-story")
+async def generate_story(request: Request) -> Any:
+    if client is None:
+        return JSONResponse({"error": "Gemini not initialized"}, status_code=500)
+
+    body = await request.json()
+    prompt_text = body.get("prompt", "Write a short kids story about a brave cat")
+    drawing_base64 = body.get("drawing")
+    num_pages = min(max(int(body.get("num_pages", 5)), 1), 10)
+
+    drawing_path = None
+    if drawing_base64:
+        try:
+            if "," in drawing_base64:
+                drawing_base64 = drawing_base64.split(",")[1]
+            drawing_bytes = base64.b64decode(drawing_base64)
+            fname = f"drawing_{uuid.uuid4().hex[:6]}.png"
+            drawing_path = IMAGE_DIR / fname
+            drawing_path.write_bytes(drawing_bytes)
+        except Exception:
+            traceback.print_exc()
+
+    prompt_pages = ",\n".join([
+        f'{{"text": "Line {i+1}", "image_prompt": "Illustration for line {i+1}"}}'
+        for i in range(num_pages)
+    ])
+
+    prompt = f"""
+Write a {num_pages}-line children's story based on this description: "{prompt_text}"
+Use the drawing as inspiration if provided.
+Return ONLY valid JSON:
+{{
+  "pages": [
+    {prompt_pages}
+  ]
+}}
+"""
+
+    try:
+        files_list = [drawing_path] if drawing_path else None
+        story_resp = await asyncio.wait_for(
+            client.generate_content(prompt, model=Model.G_2_5_FLASH, files=files_list),
+            timeout=200,
+        )
+    except Exception:
+        traceback.print_exc()
+        return JSONResponse({"error": "Gemini story generation failed"}, status_code=500)
+
+    raw = (story_resp.text or "").replace("```json", "").replace("```", "").strip()
+    try:
+        data = json.loads(raw)
+    except Exception:
+        data = {"pages": [{"text": "Once upon a time...", "image_prompt": "Cute cartoon fantasy scene"}]}
+
+    pages = data.get("pages", [])[:num_pages]
+    output_pages = []
+
+    for i, page in enumerate(pages):
+        img_url = None
+        if page.get("image_prompt"):
+            try:
+                img_resp = await asyncio.wait_for(
+                    client.generate_content(page["image_prompt"], model=Model.G_2_5_FLASH),
+                    timeout=150,
+                )
+                if img_resp.images:
+                    filename = f"story_{uuid.uuid4().hex[:6]}_{i}.png"
+                    await img_resp.images[0].save(path=str(IMAGE_DIR), filename=filename)
+                    img_url = f"http://localhost:8000/generated_images/{filename}"
+            except Exception:
+                traceback.print_exc()
+
+        output_pages.append({
+            "text": page.get("text", ""),
+            "image": img_url,
+        })
+
+    return JSONResponse({"pages": output_pages})
+
