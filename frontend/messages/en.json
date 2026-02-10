@@ -1,0 +1,349 @@
+{
+  "Navbar": {
+     "logo": "EduNext",
+    "home": "Home",
+    "forKids": "For Kids",
+    "forParents": "For Parents",
+    "pricing": "Pricing",
+    "watchDemo": "Watch demo",
+    "language": "Language"
+  },
+  "Home": {
+    "headline": "Personalized Learning for Autism, ADHD & Unique Minds",
+    "subheadline": "Because Every Child Learns Differently — And Deserves the Right Support",
+    "getStarted": "Get started",
+    "watchDemo": "Watch demo"
+  },
+  "Parent": {
+    "hello": "Hi"
+  },
+  "Cards": {
+    "childProfiling": {
+      "title": "Child Profiling",
+      "description": "Game based screening test for understanding kids cognitive strength."
+    },
+    "studyPath": {
+      "title": "Study Path Designer",
+      "description": "Generate personalized mini-courses and visual learning flowcharts"
+    },
+    "quiz": {
+      "title": "Kid-Friendly Quiz",
+      "description": "Generate and play fun quizzes to learn faster and remember better."
+    },
+    "flashcards": {
+      "title": "Flashcards",
+      "description": "Interactive lessons for kids with special needs."
+    },
+    "speechHelper": {
+      "title": "Speech Helper",
+      "description": "AI-powered speech analysis for stuttering, fluency, and practice."
+    },
+    "adhd": {
+      "title": "ADHD Reading",
+      "description": "Reading mode designed for better grasp and reduced cognitive load."
+    },
+    "camera": {
+      "title": "Interactive Camera",
+      "description": "Use gestures and voice commands to interact with AI in real-time."
+    },
+    "story": {
+      "title": "Story Generator",
+      "description": "Turn your imagination into reality by drawing on canvas and writing story"
+    }
+  },
+  "Common": {
+    "startLearning": "Start Learning",
+    "aiAnalysis": "AI Analysis",
+    "courseAi": "Course AI",
+    "quiz": "Quiz",
+    "lesson": "Lesson",
+    "therapy": "Therapy",
+    "readingMode": "Reading Mode",
+    "interactive": "Interactive",
+    "aiTool": "AI Tool",
+    "diagnostics": "Diagnostics",
+    "personalized": "Personalized",
+    "personalizedLearningPath": "Personalized Learning Path",
+    "fun": "Fun",
+    "aiGeneratedQuiz": "AI Generated quiz",
+    "reading": "Reading",
+    "visual": "Visual",
+    "audio": "Audio",
+    "speechTherapy": "Speech Therapy",
+    "focusMode": "Focus Mode",
+    "realTime": "Real-time",
+    "voiceAi": "Voice AI",
+    "handsOn": "Hands-on",
+    "creativity": "Creativity",
+    "writing": "Writing"
+  },
+  "DotPage": {
+    "title": "Comprehensive Cognitive Screening",
+    "subtitle": "Discover Your Cognitive Profile Through Fun Games",
+    "introWelcome": "Welcome, Brave Explorer!",
+    "introDesc": "Ready to discover how your amazing brain works? Play 6 fun games and unlock your superpowers!",
+    "introBenefits": "You'll Learn About:",
+    "benefit1": "Your unique cognitive strengths",
+    "benefit2": "How your brain processes information",
+    "benefit3": "Personalized learning strategies",
+    "benefit4": "Fun, engaging games (no boring tests!)",
+    "startAdventure": "Start Adventure! 🚀",
+    "letsGetStarted": "Let's Get Started!",
+    "yourName": "Your Name",
+    "enterYourName": "Enter your name",
+    "yourAge": "Your Age",
+    "beginGames": "Begin Games!",
+    "skipThisTest": "Skip This Test",
+    "game": "Game",
+    "round": "Round",
+    "showProfile": "🎉 Show My Results!",
+    "downloadReport": "Download PDF Report",
+    "tryAgain": "Try Again",
+      "seeRecommendations": "See Recommendations 📚",
+      "recommendationsTitle": "'s Personalized Learning Recommendations",
+      "recommendationsSubtitle": "Based on your cognitive strengths and areas for growth",
+      "assessmentSummary": "Assessment Summary",
+      "testsCompleted": "Tests Completed",
+      "correctAnswers": "Correct Answers",
+      "needsPractice": "Areas to Practice",
+      "cognitiveStrengths": "Your Cognitive Strengths",
+      "customizedStrategies": "Customized Learning Strategies",
+    "games": {
+      "architect": {
+        "name": "🏗️ Architect Builder",
+        "instructions": "Memorize the blueprint, then rebuild it!",
+        "academicUse": "Tests visual-spatial memory & planning skills"
+      },
+      "codeBreaker": {
+        "name": "🕵️ Secret Agent Code Breaker",
+        "instructions": "Listen to the code, then crack it!",
+        "academicUse": "Tests working memory & sequencing"
+      },
+      "hamster": {
+        "name": "🐹 Whack-a-Hamster",
+        "instructions": "Click the hamsters as fast as you can!",
+        "academicUse": "Tests reaction time & motor speed"
+      },
+      "gemCollector": {
+        "name": "💎 Gem Collector",
+        "instructions": "Click ONLY the purple gems, ignore the red ones!",
+        "academicUse": "Tests attention & impulse control"
+      },
+      "soundMemory": {
+        "name": "🎵 Sound Memory",
+        "instructions": "Listen carefully and repeat the pattern!",
+        "academicUse": "Tests auditory processing & memory"
+      },
+      "detective": {
+        "name": "🔍 Detective Mystery Solver",
+        "instructions": "Solve the mystery using logic clues!",
+        "academicUse": "Tests logical reasoning & problem-solving"
+      }
+    }
+  },
+  "TheoryPage": {
+    "backToCourse": "Back to Course",
+    "theory": "Theory",
+    "readAloud": "Read Aloud",
+    "stopSpeaking": "Stop Speaking",
+    "backToNormalView": "Back to Normal View",
+    "readingMode": "Reading Mode",
+    "focusOptimizedReading": "Focus-optimized reading",
+    "timePerSentence": "Time per sentence",
+    "wordsPerGroup": "Words per group",
+    "bionicReading": "Bionic Reading",
+    "voiceNarration": "Voice Narration",
+    "startReading": "Start Reading",
+    "continue": "Continue",
+    "sentences": "Sentences",
+    "rereads": "Rereads",
+    "pace": "Pace",
+    "keyboardShortcuts": "Keyboard Shortcuts",
+    "pausePlay": "Pause/Play",
+    "previousGroup": "Previous group",
+    "nextGroup": "Next group",
+    "speedUp": "Speed up",
+    "slowDown": "Slow down",
+    "toggleVoice": "Toggle voice",
+    "exit": "Exit",
+    "enableReadingMode": "Enable Reading Mode",
+    "askQuestion": "Ask a question about this topic...",
+    "send": "Send",
+    "generating": "Generating",
+    "loadingTheory": "Loading theory content...",
+    "errorBackendNotReachable": "Error: Cannot reach backend at http://localhost:8000\n\nMake sure the backend server is running:\n1. Open terminal in the edunext folder\n2. Run: uvicorn main:app --reload\n3. Wait for \"Application startup complete\"",
+    "noTopicProvided": "No topic or PDF provided. Please start from the course page."
+  },
+  "CoursePage": {
+    "title": "Learning Flow",
+    "subtitle": "Upload a PDF or enter a topic. We'll tailor the flow using the latest cognitive profile.",
+    "topicLabel": "Learning Topic",
+    "topicPlaceholder": "e.g., Photosynthesis",
+    "profileLabel": "Select User Profile",
+    "selectProfile": "Select a profile...",
+    "loading": "Loading profiles...",
+    "pdfLabel": "Or Upload a PDF",
+    "uploadPdf": "Upload PDF",
+    "analyze": "Analyze & Generate Flow",
+    "analyzing": "Analyzing...",
+    "deletePlan": "Delete this learning flow",
+    "noResults": "No profile selected or results not yet generated.",
+    "defaultSteps": {
+      "theory": "Theory",
+      "quiz": "Quiz",
+      "flashcards": "Flashcards",
+      "miniTest": "Mini Test"
+    },
+    "stepActions": {
+      "openQuiz": "Open Quiz",
+      "openFlashcards": "Open Flashcards",
+      "takeMiniTest": "Take Mini Test",
+      "openTheory": "Open Theory"
+    },
+    "noFileSelected": "No file selected",
+    "noProfiles": "No profiles available",
+    "extractedCharacters": "Extracted {count} characters."
+  },
+  "SpeechPage": {
+    "title": "Speech Analysis & Practice",
+    "subtitle": "AI-powered speech therapy for fluency, stuttering, and pronunciation",
+    "modes": {
+      "practice": "Free Practice",
+      "analyze": "Deep Analysis",
+      "wordPractice": "Word Practice"
+    },
+    "startRecording": "Start Recording",
+    "stopRecording": "Stop Recording",
+    "playback": "Play Recording",
+    "analyzeSpeech": "Analyze Speech",
+    "analyzing": "Analyzing...",
+    "transcript": "Transcript",
+    "fluencyScore": "Fluency Score",
+    "wordCount": "Word Count",
+    "speakingRate": "Speaking Rate (words/min)",
+    "issues": "Issues Detected",
+    "suggestions": "Suggestions",
+    "strengths": "Strengths",
+    "tryAgain": "Try Again",
+    "targetText": "Target Text",
+    "spokenText": "What You Said",
+    "startListening": "Start Listening",
+    "stopListening": "Stop Listening"
+  },
+  "ReadingPage": {
+    "title": "ADHD Reading Mode",
+    "subtitle": "Focus-enhancing reading with adaptive speed and bionic text",
+    "enterText": "Enter or paste your text here...",
+    "start": "Start Reading",
+    "pause": "Pause",
+    "resume": "Resume",
+    "stop": "Stop",
+    "speed": "Speed",
+    "wordsPerGroup": "Words Per Group",
+    "bionicMode": "Bionic Reading",
+    "voiceEnabled": "Voice Narration",
+    "backgroundMode": "Background",
+    "backgrounds": {
+      "solid": "Solid",
+      "gradient": "Gradient",
+      "calm": "Calm"
+    },
+    "keyboardShortcuts": "Keyboard Shortcuts",
+    "metrics": {
+      "title": "Reading Metrics",
+      "wordsRead": "Words Read",
+      "avgSpeed": "Avg Speed (ms/word)",
+      "pauses": "Pauses",
+      "rereads": "Re-reads",
+      "stressAdaptations": "Stress Adaptations"
+    },
+    "uploadPdf": "Upload PDF",
+    "showMetrics": "Show Metrics",
+    "hideMetrics": "Hide Metrics"
+  },
+  "CameraPage": {
+    "title": "Interactive Camera AI",
+    "subtitle": "Use gestures and voice to interact with AI in real-time",
+    "startCamera": "Start Camera",
+    "stopCamera": "Stop Camera",
+    "starting": "Starting...",
+    "toggleVoice": "Toggle Voice Commands",
+    "listening": "Listening...",
+    "aiResponse": "AI Response",
+    "speak": "Speak",
+    "stop": "Stop",
+    "backendError": "Backend not reachable. Make sure the Python server is running.",
+    "cameraError": "Failed to start camera"
+  },
+  "StoryPage": {
+    "title": "Story Generator",
+    "subtitle": "Turn your drawings and imagination into beautiful illustrated stories",
+    "drawHere": "Draw your idea here",
+    "clearCanvas": "Clear Canvas",
+    "storyPrompt": "Story Description",
+    "storyPlaceholder": "A brave little robot explores a magical candy kingdom...",
+    "numberOfPages": "Number of Pages",
+    "generateStory": "Generate Story",
+    "generating": "Generating...",
+    "previousPage": "Previous Page",
+    "nextPage": "Next Page",
+    "readAloud": "Read Aloud",
+    "stopReading": "Stop Reading",
+    "page": "Page"
+  },
+  "CartoonQuiz": {
+    "title": "Cartoon Quiz",
+    "score": "Score",
+    "chooseCharacter": "Choose your favorite cartoon :",
+    "fromTheory": "Questions are from the theory you learned:",
+    "topic": "Topic",
+    "enterTopic": "Enter Quiz Topic:",
+    "topicPlaceholder": "e.g., math, science...",
+    "startQuiz": "Start Quiz",
+    "generating": "Generating your challenge...",
+    "nextQuestion": "Next Question",
+    "why": "Why?",
+    "startOver": "Start Over"
+  },
+  "FlashcardExperience": {
+    "title": "Magic Flashcards ✨",
+    "chooseMode": "Choose Your Learning Mode",
+    "modeSubtitle": "We adapt to how YOUR brain learns best",
+    "selectMode": "Select Mode →",
+    "backToCourse": "Back to Course",
+    "changeMode": "Change Mode",
+    "pasteText": "Paste Text",
+    "uploadImage": "Upload Image",
+    "pasteLesson": "📚 Paste Your Lesson",
+    "lessonPlaceholder": "Photosynthesis is how plants make food...",
+    "generateFlashcards": "Generate Flashcards",
+    "creating": "Creating...",
+    "uploadImageLabel": "📸 Upload Image",
+    "clickToUpload": "Click to upload",
+    "processing": "Processing...",
+    "flipCard": "Tap to flip",
+    "nextCard": "Next Card",
+    "previousCard": "Previous Card",
+    "restart": "Start Over",
+    "downloadPdf": "Download as PDF",
+    "audioOn": "Audio On",
+    "audioOff": "Audio Off",
+    "mastery": "Mastery",
+    "adhd": {
+      "name": "ADHD Mode",
+      "description": "Fast-paced, gamified, bite-sized learning"
+    },
+    "dyslexia": {
+      "name": "Dyslexia Mode",
+      "description": "Audio-first, readable fonts, no stress"
+    },
+    "autism": {
+      "name": "Autism Mode",
+      "description": "Predictable, structured, calm interface"
+    },
+    "general": {
+      "name": "General Mode",
+      "description": "Balanced learning for everyone"
+    }
+  }
+}
