@@ -47,7 +47,7 @@ const page = () => {
       />
 
       <Card2
-        href="/quiz2"
+        href="/quiz-choice"
         title={messages.Cards.quiz.title}
         description={messages.Cards.quiz.description}
         tags={[c.fun, c.aiGeneratedQuiz]}
@@ -101,6 +101,33 @@ const page = () => {
           { icon: <PenTool className="w-5 h-5 text-white" />, key: "pen", className: "top-14 right-16", delay: "0.2s" },
           { icon: <Sparkles className="w-5 h-5 text-white" />, key: "sparkles", className: "bottom-6 right-6", delay: "0.4s" },
           { icon: <Scroll className="w-5 h-5 text-white" />, key: "scroll", className: "bottom-3 right-20", delay: "0.6s" },
+        ]}
+      />
+       <Card2
+        href="/camera"
+        title={messages.Cards.camera.title}
+        description={messages.Cards.camera.description}
+        tags={[c.realTime, c.voiceAi, c.handsOn]}
+        badge={c.interactive}
+        colorScheme="lime"
+        buttonText={c.startLearning}
+        floatingIcons={[
+          { icon: <Hand className="w-5 h-5 text-white" />, key: "hand", className: "top-4 right-4", delay: "0s" },
+          { icon: <Pointer className="w-5 h-5 text-white" />, key: "pointer", className: "top-16 right-20", delay: "0.3s" },
+          { icon: <MousePointerClick className="w-5 h-5 text-white" />, key: "click", className: "bottom-6 right-8", delay: "0.5s" },
+        ]}
+      />
+    <Card2
+        href="/speech"
+        title={messages.Cards.speechHelper.title}
+        description={messages.Cards.speechHelper.description}
+        tags={[c.speechTherapy, c.aiAnalysis]}
+        badge={c.therapy}
+        colorScheme="blue"
+        buttonText={c.startLearning}
+        floatingIcons={[
+          { icon: <Mic className="w-5 h-5 text-white" />, key: "mic1", className: "top-4 right-4", delay: "0s" },
+          { icon: <Sparkles className="w-5 h-5 text-white" />, key: "sparkle2", className: "bottom-6 right-8", delay: "0.4s" },
         ]}
       />
     </div>

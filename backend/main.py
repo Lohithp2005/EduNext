@@ -1412,3 +1412,24 @@ async def video():
 async def root():
     return {"status": "running", "camera_on": camera_on}
 
+students_db = {
+    1: {
+        "name": "Chaitra",
+        "age": 11,
+        "date": "2026-02-03T09:17:50.497Z",
+        "cognitiveScores": {
+            "visualSpatial": 44,
+            "workingMemory": 0,
+            "reactionTime": 60,
+            "attention": 0,
+            "auditoryProcessing": 0,
+            "reasoning": 0
+        }
+    }
+}
+
+@app.get("/student/{student_id}")
+def get_student(student_id: int):
+    if student_id not in students_db:
+        return {"error": "Student not found"}
+    return students_db[student_id]

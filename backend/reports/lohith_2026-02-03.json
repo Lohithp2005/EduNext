@@ -1,0 +1,13 @@
+{
+  "name": "lohith",
+  "age": 11,
+  "date": "2026-02-03T09:08:39.390Z",
+  "cognitiveScores": {
+    "visualSpatial": 65,
+    "workingMemory": 60,
+    "reactionTime": 100,
+    "attention": 25,
+    "auditoryProcessing": 55,
+    "reasoning": 50
+  }
+}

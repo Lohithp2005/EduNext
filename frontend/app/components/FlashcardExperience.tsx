@@ -42,6 +42,7 @@ type FlashcardExperienceProps = {
   skipModeSelection?: boolean;
   initialLessonText?: string;
   skipInput?: boolean;
+  initialTopic?: string;
 };
 
 export default function FlashcardExperience({
@@ -49,6 +50,7 @@ export default function FlashcardExperience({
   skipModeSelection,
   initialLessonText,
   skipInput,
+  initialTopic,
 }: FlashcardExperienceProps) {
   const { messages } = useLanguage();
   const t = messages.FlashcardExperience;
@@ -211,6 +213,12 @@ export default function FlashcardExperience({
   }, [initialLessonText, skipInput, step, initialMode]);
 
   useEffect(() => {
+    if (!initialLessonText && initialTopic && !lessonText.trim()) {
+      setLessonText(initialTopic);
+    }
+  }, [initialLessonText, initialTopic, lessonText]);
+
+  useEffect(() => {
     if (initialMode) {
       const config = modeConfigs[initialMode];
       setSelectedMode(initialMode);
@@ -289,7 +297,7 @@ export default function FlashcardExperience({
       });
 
       const maxLength = modeSettings?.maxQuestionLength || 20;
-      const res = await fetch("/api/gemini", {
+      const res = await fetch("http://localhost:8000/api/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -324,7 +332,7 @@ export default function FlashcardExperience({
 
     try {
       const maxLength = modeSettings?.maxQuestionLength || 20;
-      const res = await fetch("/api/gemini", {
+      const res = await fetch("http://localhost:8000/api/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -367,7 +375,7 @@ For ${selectedMode} learners, max ${maxLength} words per question. Return ONLY J
 
     try {
       const maxLength = settings.maxQuestionLength || 20;
-      const res = await fetch("/api/gemini", {
+      const res = await fetch("http://localhost:8000/api/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -707,7 +715,45 @@ For ${mode} learners, max ${maxLength} words per question. Return ONLY JSON: [{"
         {/* Flashcard Display */}
         {flashcards.length > 0 && (
           <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
+            {modeSettings?.gamification ? (
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white rounded-2xl shadow-lg p-4 border border-purple-100">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-semibold text-gray-600">
+                      Progress
+                    </span>
+                    <span className="text-xl font-bold bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                      {currentCard + 1}/{flashcards.length}
+                    </span>
+                  </div>
+                  <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-linear-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-500"
+                      style={{
+                        width: `${((currentCard + 1) / flashcards.length) * 100}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl shadow-lg p-4 border border-green-100">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-semibold text-gray-600">
+                      Mastered
+                    </span>
+                    <span className="text-xl font-bold bg-linear-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">
+                      {masteryPercentage}%
+                    </span>
+                  </div>
+                  <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-linear-to-r from-green-500 to-teal-500 rounded-full transition-all duration-500"
+                      style={{ width: `${masteryPercentage}%` }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            ) : (
               <div className="bg-white rounded-2xl shadow-lg p-4 border border-purple-100">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm font-semibold text-gray-600">
@@ -726,24 +772,7 @@ For ${mode} learners, max ${maxLength} words per question. Return ONLY JSON: [{"
                   ></div>
                 </div>
               </div>
-
-              <div className="bg-white rounded-2xl shadow-lg p-4 border border-green-100">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-semibold text-gray-600">
-                    Mastered
-                  </span>
-                  <span className="text-xl font-bold bg-linear-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">
-                    {masteryPercentage}%
-                  </span>
-                </div>
-                <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-linear-to-r from-green-500 to-teal-500 rounded-full transition-all duration-500"
-                    style={{ width: `${masteryPercentage}%` }}
-                  ></div>
-                </div>
-              </div>
-            </div>
+            )}
 
             <div className="relative perspective-1000">
               <div
@@ -829,21 +858,23 @@ For ${mode} learners, max ${maxLength} words per question. Return ONLY JSON: [{"
                 </button>
               )}
 
-              <button
-                onClick={toggleMastered}
-                disabled={masteredCards.has(currentCard)}
-                className={`py-4 rounded-2xl font-bold transition-all flex items-center justify-center ${
-                  masteredCards.has(currentCard)
-                    ? "bg-linear-to-r from-yellow-400 to-orange-400 text-white cursor-not-allowed"
-                    : "bg-white border-2 border-gray-200 text-gray-600 hover:border-yellow-300 hover:bg-yellow-50"
-                }`}
-              >
-                <Star
-                  className={`w-5 h-5 ${
-                    masteredCards.has(currentCard) ? "fill-white" : ""
+              {modeSettings?.gamification && (
+                <button
+                  onClick={toggleMastered}
+                  disabled={masteredCards.has(currentCard)}
+                  className={`py-4 rounded-2xl font-bold transition-all flex items-center justify-center ${
+                    masteredCards.has(currentCard)
+                      ? "bg-linear-to-r from-yellow-400 to-orange-400 text-white cursor-not-allowed"
+                      : "bg-white border-2 border-gray-200 text-gray-600 hover:border-yellow-300 hover:bg-yellow-50"
                   }`}
-                />
-              </button>
+                >
+                  <Star
+                    className={`w-5 h-5 ${
+                      masteredCards.has(currentCard) ? "fill-white" : ""
+                    }`}
+                  />
+                </button>
+              )}
 
               <button
                 onClick={nextCard}

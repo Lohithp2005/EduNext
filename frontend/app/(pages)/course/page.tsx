@@ -74,20 +74,37 @@ export default function Page() {
   const { messages, locale } = useLanguage();
   const t = messages.CoursePage;
   
-  // Helper function to detect if text is primarily in English
-  const isEnglishText = (text: string): boolean => {
-    const latinCount = (text.match(/[a-zA-Z]/g) || []).length;
-    const nonLatinCount = (text.match(/[^\x00-\x7F]/g) || []).length;
-    return latinCount > nonLatinCount;
+  // Helper function to detect if text is likely in English
+  const isLikelyEnglish = (text: string): boolean => {
+    const hasNonAscii = /[^\x00-\x7F]/.test(text);
+    if (hasNonAscii) return false;
+    const lower = text.toLowerCase();
+    const commonHits = [
+      "the",
+      "and",
+      "to",
+      "for",
+      "with",
+      "on",
+      "of",
+      "in",
+      "learn",
+      "practice",
+      "review",
+      "check",
+      "quiz",
+      "flashcards",
+      "theory",
+      "mini",
+    ].filter((word) => lower.includes(word)).length;
+    return commonHits >= 1;
   };
   
   // Helper function to validate if steps are in the requested language
   const validateStepsLanguage = (steps: LearningStep[], requestedLocale: Locale): boolean => {
-    if (requestedLocale === "en") return true; // English is fine for English locale
-    
-    // For other locales, check if descriptions are actually in that language
-    const allDesc = steps.map(s => s.desc).join(" ");
-    return !isEnglishText(allDesc);
+    const allText = steps.map((s) => `${s.title} ${s.desc}`).join(" ");
+    if (requestedLocale === "en") return isLikelyEnglish(allText);
+    return !isLikelyEnglish(allText);
   };
 
   const [topic, setTopic] = useState("");
@@ -117,11 +134,12 @@ export default function Page() {
 
   // Load available reports
   useEffect(() => {
+    let mounted = true;
     const loadReports = async () => {
       try {
         const res = await fetch("/api/list-reports");
         const data = await res.json();
-        if (data.reports && Array.isArray(data.reports)) {
+        if (mounted && data.reports && Array.isArray(data.reports)) {
           setReports(data.reports);
           if (data.reports.length > 0) {
             setSelectedReport(data.reports[0].name);
@@ -130,11 +148,12 @@ export default function Page() {
       } catch (err) {
         console.error("Failed to load reports:", err);
       } finally {
-        setReportsLoading(false);
+        if (mounted) setReportsLoading(false);
       }
     };
 
     loadReports();
+    return () => { mounted = false; };
   }, []);
 
   // Restore plan from localStorage on mount
@@ -170,22 +189,23 @@ export default function Page() {
   };
 
   const actionMap = useMemo(() => {
-    const encodedTopic = encodeURIComponent(topic.trim());
+    const resolvedTopic = topic.trim() || (pdfName ? pdfName.replace(/\.[^.]+$/, "") : "");
+    const encodedTopic = encodeURIComponent(resolvedTopic);
     const baseQuery = encodedTopic ? `?topic=${encodedTopic}` : "";
 
     return {
       quiz: {
         label: t.stepActions.openQuiz,
-        href: `/quiz${baseQuery}`,
+        href: `/quiz-choice${baseQuery}`,
       },
       flashcards: {
         label: `${t.stepActions.openFlashcards} (${flashcardMode})`,
-        href: `/flashcard?mode=${flashcardMode}${
+        href: `/flashcard?mode=${flashcardMode}&from=course${
           encodedTopic ? `&topic=${encodedTopic}` : ""
         }`,
       },
     } as const;
-  }, [topic, flashcardMode, t.stepActions]);
+  }, [topic, pdfName, flashcardMode, t.stepActions]);
 
   const parsePdfText = async (file: File) => {
     const arrayBuffer = await file.arrayBuffer();
@@ -245,6 +265,8 @@ export default function Page() {
       setError("Please select a user profile");
       return;
     }
+
+    const resolvedTopic = topic.trim() || (pdfName ? pdfName.replace(/\.[^.]+$/, "") : "");
     
     // Clear old course plan from localStorage
     localStorage.removeItem("coursePlan");
@@ -285,6 +307,12 @@ export default function Page() {
         setFlashcardMode(data.flashcardMode);
       }
 
+      const flashcardSourceText = pdfText.trim() || topic.trim();
+      if (flashcardSourceText) {
+        localStorage.setItem("lastTheory", flashcardSourceText);
+        localStorage.setItem("lastTheoryTopic", resolvedTopic || flashcardSourceText.slice(0, 60));
+      }
+
       setHasPlan(true);
 
       localStorage.setItem(
@@ -293,7 +321,7 @@ export default function Page() {
           hasPlan: true,
           steps: data.steps,
           flashcardMode: data.flashcardMode,
-          topic: topic,
+          topic: resolvedTopic,
           pdfText: pdfText,
           pdfName: pdfName,
           selectedReport: selectedReport,
@@ -436,7 +464,7 @@ export default function Page() {
                 : stepType === 'theory'
                 ? {
                     label: t.stepActions.openTheory,
-                    href: `/theory?topic=${encodeURIComponent(topic.trim())}`,
+                    href: `/theory?topic=${encodeURIComponent(topic.trim())}&mode=${flashcardMode}`,
                   }
                 : null;
 
